@@ -1,6 +1,9 @@
 $width: 140px;
 $half:calc(50% - 140px / 2);
 .ScanPage {
+  #UploadWrapper {
+
+  }
     #ScanReceiptButton {
         border-radius: 50%;
         width:$width;
@@ -8,8 +11,12 @@ $half:calc(50% - 140px / 2);
         font-size: 30px;
         //background-color: #92d966;
         //color:#fefefe;
-        position: absolute;
-        top:$half;
-        left:$half;
+
     }
+  #UploadDiv {
+    position: absolute;
+    top:$half;
+    left:$half;
+    width: 150px;
+  }
 }
