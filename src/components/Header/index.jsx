@@ -15,6 +15,11 @@ function Header() {
           </a>
         </Menu.Item>
         <Menu.Item>
+          <a href="scan">
+          Scan
+          </a>
+        </Menu.Item>
+        <Menu.Item>
           <a href="plan">
           Plan
           </a>
@@ -23,11 +28,5 @@ function Header() {
     </header>
   )
 }
-function handleClick(e) {
-console.log('click ', e);
-this.setState({
-  current: e.key,
-});
-};
 
 export default Header;
