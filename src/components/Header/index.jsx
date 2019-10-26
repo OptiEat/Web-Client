@@ -4,7 +4,6 @@ import 'antd/dist/antd.css';
 import './index.scss';
 function Header() {
 
-
   return (
     <header className="Header">
     <h1 id='HeaderTitle'>OptiEat</h1>
