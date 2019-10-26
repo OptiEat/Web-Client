@@ -1,8 +1,10 @@
 {
-  "name": "optieat",
-  "version": "0.1.0",
-  "private": true,
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
   "dependencies": {
+<<<<<<< HEAD
     "antd": "^3.24.2",
     "axios": "^0.19.0",
     "babel-plugin-import": "^1.12.2",
@@ -18,26 +20,26 @@
     "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0"
+=======
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "request": "^2.88.0"
+>>>>>>> 2ffce00143a1740410ec57771288c9c3eac7e17d
   },
+  "devDependencies": {},
   "scripts": {
-    "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
-    "test": "react-app-rewired test",
-    "eject": "react-scripts eject"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "heroku-postbuild": "cd web && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
   },
-  "eslintConfig": {
-    "extends": "react-app"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OptiEat/Web-Client.git"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/OptiEat/Web-Client/issues"
+  },
+  "homepage": "https://github.com/OptiEat/Web-Client#readme"
 }
