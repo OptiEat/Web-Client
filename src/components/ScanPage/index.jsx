@@ -1,8 +1,7 @@
 import React from 'react';
-
 import Layout from '../Layout';
 import {Button} from 'antd';
-
+import 'antd/dist/antd.css';
 import './index.scss';
 function ScanPage() {
     return (
