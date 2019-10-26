@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
-  },
   "scripts": {
     "dev": "run-p dev:**",
     "dev:server": "nodemon app.js",
