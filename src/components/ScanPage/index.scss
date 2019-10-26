@@ -1,0 +1,15 @@
+$width: 140px;
+$half:calc(50% - 140px / 2);
+.ScanPage {
+    #ScanReceiptButton {
+        border-radius: 50%;
+        width:$width;
+        height:$width;
+        font-size: 30px;
+        background-color: #92d966;
+        color:#fefefe;
+        position: absolute;
+        top:$half;
+        left:$half;
+    }
+}
