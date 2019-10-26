@@ -5,6 +5,7 @@ import 'antd/dist/antd.css';
 import './index.scss';
 import useForm from 'react-hook-form'
 
+const request = require('request');
 const axios = require('axios');
 
 const dummyRequest = ({ file, onSuccess }) => {
@@ -38,7 +39,21 @@ function ScanPage(props) {
         toBase64(info.file.originFileObj).then(base64Data => {
           base64Data = base64Data.substring(22);
           console.log(base64Data);
-          axios.post('https://vaeip452tl.execute-api.us-east-2.amazonaws.com/OptiEatOCR', {
+
+          var options = {
+            uri: "http://localhost:5000/api/query/scan",
+            method: "POST",
+            json: {
+              "image": base64Data
+            }
+          };
+            request(options, (err, resp, body) => {
+console.log(resp);
+console.log(err);
+            });
+
+/*
+          axios.post('http://localhost:5000/api/query/scan', {
             image: base64Data
           }).then(function (response) {
             console.log(response);
@@ -46,6 +61,7 @@ function ScanPage(props) {
           .catch(function (error) {
             console.log(error);
           });
+          */
         });
       } else if (info.file.status === 'error') {
         message.error(`${info.file.name} file upload failed.`);
