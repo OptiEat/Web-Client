@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'; 
 import Layout from '../Layout';
 import {Button} from 'antd';
 import 'antd/dist/antd.css';
