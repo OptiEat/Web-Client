@@ -74,7 +74,7 @@ console.log(err);
       <Layout>
         <div className ="ScanPage">
           <section className="ScannedImageDisplay">
-            <img src=""> 
+            <img src="" /> 
           </section>
           <div id='UploadDiv'>
           <Upload {...uploadProps} id='UploadWrapper'>
