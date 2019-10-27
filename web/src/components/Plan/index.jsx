@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Input,  Row, Col, Button , Collapse, Icon} from 'antd';
+import {Input,  Row, Col, Button , Collapse, Icon, message} from 'antd';
 
 import 'antd/dist/antd.css';
 import DatePicker from 'react-datepicker';
@@ -12,6 +12,7 @@ const someFood = [
 const listOfFunnyMessages = ["Cooking the chicken breast", "Marinating the meats", "Salting the eggs", "Dicing the onions and tomatoes", "Stirring the pots and using pans",
 "Watching Gordon Ramsey videos", "Grating cheese and drinking wine", "Adding mozzarella on that pizza", "Tasting the lentil soup", "Cutting open watermelons", "Taking a water break",
 "Looking for inspiration"];
+const request = require('request');
 function Plan(props){
     const [loading, setLoading] = useState(false);
     const [regenMealText, setRegenMealText] = useState("Regenerate Meal Plan");
@@ -24,7 +25,37 @@ function Plan(props){
       setRegenMealText("Generating");
       funnyMessageTimer=setInterval(function(){
         setFunText(listOfFunnyMessages[Math.floor(Math.random() * listOfFunnyMessages.length)]);
-      }, 1000)
+      }, 1000);
+
+      // get data from localStorage
+      let ls = window.localStorage;
+      let foodKeys = Object.keys(ls);
+      let productsData = [];
+      for (let key of foodKeys) {
+        let foodItemData = JSON.parse(ls[key]);
+        foodItemData.shortName = key;
+        productsData.push(foodItemData);
+      }
+
+      var options = {
+        //url: "https://optieat.herokuapp.com/api/query/compute/",
+        url:"http://localhost:5000/api/query/compute",
+        method: "POST",
+        json: {
+          "Products": productsData
+        }
+      };
+      request(options, (err, resp, body) => {
+        console.log(resp);
+        if (resp) {
+          message.success(`Successfully Created Meal Plan!`);
+          setLoading(false);
+          console.log(err);
+        }
+        else {
+          message.error("Scan failed");
+        }
+      });
 
     }
     return(
@@ -49,7 +80,7 @@ function Plan(props){
 }
 
 function Meals(props) {
-console.log(props.meals);
+
   return (
     <Collapse accordion>
       {props.meals.map((val, index) =>
