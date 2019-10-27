@@ -54,10 +54,11 @@ function Plan(props){
       };
       request(options, (err, resp, body) => {
         if (resp) {
-          message.success(`Successfully Created Meal Plan!`);
+
           setLoading(false);
-          if(body.body)
+          if(resp.body.body && resp.body.body.Recipes)
           {
+            message.success(`Successfully Created Meal Plan!`);
             resp.body.body.Recipes.forEach((val) => {val.eaten=false});
             setRecipes(resp.body.body.Recipes);
             let wasteP = resp.body.body.PercentageOfWaste;
@@ -73,10 +74,12 @@ function Plan(props){
             });
             localStorage.setItem('mealPlan', JSON.stringify(resp.body.body.Recipes));
           }
-          console.log(err);
+          else {
+            message.error("Meal Planning failed :(");
+          }
         }
         else {
-          message.error("Scan failed");
+          message.error("Meal Planning failed :(");
         }
         setLoading(false);
         setRegenMealText("Regenerate Meal Plan");

@@ -27,9 +27,8 @@ function Fridge(props){
               return <Col span ={12} className="fridgeItem" key={index}>
                 <div className='fridgeInnerItem'>
                 <h3>{tval.substring(0,1).toUpperCase() + tval.substring(1)}</h3>
-                <span>Expiration: 
-                  <DatePicker 
-                    defaultValue={moment(val['expiration'], dateFormat)} 
+                <span className='expirationRow'>Expiration: <DatePicker
+                    defaultValue={moment(val['expiration'], dateFormat)}
                     onChange={e => {
                       console.log(e);
                       val['expiration'] = formatDate(e._d);
@@ -47,7 +46,7 @@ function Fridge(props){
                               ls[tval] = JSON.stringify(val);
                             }}
                         />
-                         {val['quantityType'] == 'Count' ? tval + "s" : val['quantityType']}</p>
+                         { val['quantityType'] == 'Count' ? " " + tval + "s" : " " +val['quantityType']}</p>
                 </div>
               </Col>
             }})}
