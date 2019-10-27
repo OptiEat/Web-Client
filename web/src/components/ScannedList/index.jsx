@@ -46,13 +46,15 @@ function List(props){
         {
             ls[val] = JSON.stringify({
                 quantity: (parseInt( (JSON.parse(ls[val]))['quantity'] ) + parseInt(thisFoodquantity)),
-                expiration: selectedDate[index]
+                expiration: selectedDate[index],
+                quantityType: props.foods.Products[index].quantityType
                 });
         }
         else {
             ls[val] = JSON.stringify({
                 quantity: parseInt(thisFoodquantity),
-                expiration: selectedDate[index]
+                expiration: selectedDate[index],
+                quantityType: props.foods.Products[index].quantityType
                 });
         }
       }
@@ -75,14 +77,19 @@ function List(props){
         });
 */
 
-    var ls = window.localStorage;
-    React.useEffect(() => {
-      register({ name: "AntdInput" }); // custom register antd input
-    }, [register])
-    const handleChange = (e) => {
-      console.log(e.target.value);
-      register({ name: "AntdInput" }, e.target.value);
+    function handleAddFood(){
+      // props.foods.Products.push({
+      //   description: "",
+      //   expiration: "",
+      //   id: "",
+      //   quantity: "",
+      //   quantityType: "",
+      //   shortName: ""
+      // })
     }
+    var ls = window.localStorage;
+    if(props.foods)
+      console.log(props.foods.Products);
     return(
         <form  onSubmit={handleSubmit(onSubmit)}>
           <Row>
@@ -130,6 +137,11 @@ function List(props){
             }
             )
             }
+
+                <a href="" className = "addLink" onclick={handleAddFood}>
+                  Add Product 
+                </a>
+            
             <Button type="primary" htmlType="submit">
            Submit
          </Button>
