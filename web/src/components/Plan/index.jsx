@@ -41,7 +41,6 @@ function Plan(props){
         foodItemData.expiration = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
         productsData.push(foodItemData);
       }
-      console.log(productsData);
       var options = {
         url: "https://optieat.herokuapp.com/api/query/compute/",
         // url:"http://localhost:5000/api/query/compute",
@@ -49,8 +48,6 @@ function Plan(props){
         json: {"Products": productsData}
       };
       request(options, (err, resp, body) => {
-        console.log(body);
-        console.log(resp);
         if (resp) {
           message.success(`Successfully Created Meal Plan!`);
           setLoading(false);
@@ -87,7 +84,7 @@ function Plan(props){
             {recipes && days.map((val, index)=>
               <div className='mealBlock'>
                 <h2>Day {index + 1} suggested meals</h2>
-                <Meals meals={days[index]}/>
+                <Meals meals={days[index]} day={index} setRecipes={setRecipes}/>
             </div>
             )}
             {loading ? <p id='funnyMessage'>{funText}</p> : ""}
@@ -101,6 +98,22 @@ function Plan(props){
 
 function Meals(props) {
 
+  function handleDeduct(index){
+    let ls = window.localStorage;
+    let foodKeys = Object.keys(ls);
+    let productsData = [];
+    let mealPlan = JSON.parse(ls['mealPlan']);
+    for (let key of foodKeys) {
+      mealPlan[index]['effectiveWeights'].forEach((val)=>{
+        if(val[key]) ls[key] = parseInt(ls[key]) - parseInt(val[key]);
+      });
+    }
+    delete mealPlan[index];
+    ls['mealPlan'] = JSON.stringify(mealPlan);
+    props.setRecipes(mealPlan);
+    console.log(index);
+  }
+
   return (
     <Collapse accordion>
       {props.meals.map((val, index) =>
@@ -109,7 +122,9 @@ function Meals(props) {
               <center>
               <img className='mealImage' src={val.image} />
               <p className='ingredientsInfo'>Ingredients: {val.ingredientLines}</p>
-              <a href={val.shareAs} target="_blank"><Button className="tryRecipeButton">Try the recipe!</Button></a></center>
+              <a href={val.shareAs} target="_blank"><Button className="tryRecipeButton">Try the recipe!</Button></a>
+              <Button className="deductButton" onClick={() => {handleDeduct(props.day*3+index)}}>Move to Stomach!</Button>
+              </center>
             </Panel>
         })
 
