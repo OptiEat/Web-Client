@@ -22,6 +22,7 @@ function Fridge(props){
             <h1>What's in your fridge?</h1>
             <Row>
             {keys.map((tval, index) => {
+              if(tval != 'mealPlan') {
               console.log(keys, JSON.parse(ls[tval]));
               let val = JSON.parse(ls[tval]);
               return <Col span ={12} className="fridgeItem" key={index}>
@@ -31,7 +32,7 @@ function Fridge(props){
                 <p>Amount: {val['quantity']}</p>
                 </div>
               </Col>
-            })}
+            }})}
             </Row>
           </div>
       </Layout>

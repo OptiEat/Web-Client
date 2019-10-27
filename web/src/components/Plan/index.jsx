@@ -6,9 +6,7 @@ import DatePicker from 'react-datepicker';
 import './index.scss';
 import Layout from '../Layout';
 const { Panel } = Collapse;
-const someFood = [
-  {name:"Baked Chicken", ingredients: "Chicken, Olive Oil, Lettuce", link:"https://www.google.com", image:"https://www.skinnytaste.com/wp-content/uploads/2010/02/Roast-Chicken-with-Rosemary-_-Lemon-Finals-15.jpg"}, {name:"Chicken Burger", link:"", image:"https://easychickenrecipes.com/wp-content/uploads/2019/06/fried-chicken-sandwich-4-of-7.jpg", ingredients: "Buns, Chicken, Olive Oil, Lettuce"}
-]
+const runAgain = 1;
 const listOfFunnyMessages = ["Cooking the chicken breast", "Marinating the meats", "Salting the eggs", "Dicing the onions and tomatoes", "Stirring the pots and using pans",
 "Watching Gordon Ramsey videos", "Grating cheese and drinking wine", "Adding mozzarella on that pizza", "Tasting the lentil soup", "Cutting open watermelons", "Taking a water break",
 "Looking for inspiration"];
@@ -26,20 +24,22 @@ function Plan(props){
       setRegenMealText("Generating");
       funnyMessageTimer=setInterval(function(){
         setFunText(listOfFunnyMessages[Math.floor(Math.random() * listOfFunnyMessages.length)]);
-      }, 1000);
+      }, 3000);
 
       // get data from localStorage
       let ls = window.localStorage;
       let foodKeys = Object.keys(ls);
       let productsData = [];
       for (let key of foodKeys) {
-        let foodItemData = JSON.parse(ls[key]);
-        foodItemData.shortName = key;
-        const date1 = new Date();
-        const date2 = new Date(foodItemData.expiration);
-        const diffTime = Math.abs(date2 - date1);
-        foodItemData.expiration = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-        productsData.push(foodItemData);
+        if (key != 'mealPlan') {
+          let foodItemData = JSON.parse(ls[key]);
+          foodItemData.shortName = key;
+          const date1 = new Date();
+          const date2 = new Date(foodItemData.expiration);
+          const diffTime = Math.abs(date2 - date1);
+          foodItemData.expiration = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+          productsData.push(foodItemData);
+        }
       }
       console.log(productsData);
       var options = {
@@ -56,6 +56,7 @@ function Plan(props){
           setLoading(false);
           if(body.body)
             setRecipes(resp.body.body.Recipes);
+            localStorage.setItem('mealPlan', JSON.stringify(resp.body.body.Recipes));
           console.log(err);
         }
         else {
@@ -68,7 +69,8 @@ function Plan(props){
     }
 
     var days = [];
-    if(recipes){
+
+  if(recipes){
     for(var i = 0; i < recipes.length/3; i++){
       days.push([]);
       for(var j = 0; j < 3 && recipes[i*3+j]; j++){
@@ -76,13 +78,18 @@ function Plan(props){
       }
     }
   }
-
-  if(props.autoRun) handleClick(new Event());
-
+  useEffect(() => {
+    // Update the document title using the browser API
+    let storedRecipes = JSON.parse(localStorage.getItem('mealPlan'));
+    console.log(storedRecipes);
+    setRecipes(storedRecipes);
+  }, [runAgain]);
     return(
       <Layout>
           <div className="Plan">
-            <h1 id='PlanTitle'>Your meal plan </h1><Icon type="smile" theme="twoTone" twoToneColor="#88d657" id='smileIcon'/>
+            <div>
+<h1 id='PlanTitle'>Your meal plan </h1><Icon type="smile" theme="twoTone" twoToneColor="#88d657" id='smileIcon'/>
+            </div>
 
             {recipes && days.map((val, index)=>
               <div className='mealBlock'>
