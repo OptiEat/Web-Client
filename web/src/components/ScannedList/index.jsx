@@ -66,7 +66,7 @@ function List(props){
             )
             }
             </ul>
-            <input type="submit"/>
+            <input type="submit" className="submitButton"/>
         </form>
     )
     
