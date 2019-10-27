@@ -38,7 +38,7 @@ function Plan(props){
         const date1 = new Date();
         const date2 = new Date(foodItemData.expiration);
         const diffTime = Math.abs(date2 - date1);
-        foodItemData.expiration = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+        foodItemData.expiration = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
         productsData.push(foodItemData);
       }
       console.log(productsData);
@@ -56,8 +56,6 @@ function Plan(props){
           setLoading(false);
           if(body.body)
             setRecipes(resp.body.body.Recipes);
-          else
-            setRecipes(JSON.parse(returnjson()));
           console.log(err);
         }
         else {
@@ -66,7 +64,7 @@ function Plan(props){
       });
 
     }
-    
+
     var days = [];
     if(recipes){
     for(var i = 0; i < recipes.length/3; i++){
@@ -74,14 +72,14 @@ function Plan(props){
       for(var j = 0; j < 3 && recipes[i*3+j]; j++){
         days[i].push(recipes[i*3+j]);
       }
-    }   
+    }
   }
 
     return(
       <Layout>
           <div className="Plan">
             <h1 id='PlanTitle'>Your meal plan </h1><Icon type="smile" theme="twoTone" twoToneColor="#88d657" id='smileIcon'/>
-            
+
             {recipes && days.map((val, index)=>
               <div className='mealBlock'>
                 <h2>Day {index + 1} suggested meals</h2>
