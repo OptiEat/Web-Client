@@ -21,13 +21,14 @@ function Fridge(props){
           <div className="Fridge">
             <h1>What's in your fridge?</h1>
             <Row>
-            {keys.map((val, index) => {
-              return <Col span ={12} className="fridgeItem">
+            {keys.map((tval, index) => {
+              console.log(keys, JSON.parse(ls[tval]));
+              let val = JSON.parse(ls[tval]);
+              return <Col span ={12} className="fridgeItem" key={index}>
                 <div class='fridgeInnerItem'>
-                <h3>{val.substring(0,1).toUpperCase() + val.substring(1)}</h3>
-                <span>Expiration: {formatDate(new Date(JSON.parse(ls[val])['expiration']).toString())}</span>
-                <p>{val.expiration}</p>
-                <p>Amount: {JSON.parse(ls[val])['quantity']}</p>
+                <h3>{tval.substring(0,1).toUpperCase() + tval.substring(1)}</h3>
+                <span>Expiration: {val['expiration']}</span>
+                <p>Amount: {val['quantity']}</p>
                 </div>
               </Col>
             })}
