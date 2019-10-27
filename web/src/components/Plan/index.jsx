@@ -80,6 +80,9 @@ function Plan(props){
     let storedRecipes = JSON.parse(localStorage.getItem('mealPlan'));
     console.log(storedRecipes);
     setRecipes(storedRecipes);
+    if (props.autoRun == true) {
+      handleClick();
+    }
   }, [runAgain]);
     return(
       <Layout>
