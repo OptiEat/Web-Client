@@ -9,18 +9,13 @@ import Layout from '../Layout';
 import $ from 'jquery';
 const dateFormat = 'YYYY/MM/DD';
 function ScannedList(props) {
-    var foods = [{
-        name: "Chicken",
-        quantity: 10,
-        expiration: new Date("10/26/2019")
-    }];
     return (
         <Layout>
-            <List foods={props.foods}/>
+            <List foods={props.foods} setScannedFoods={props.setScannedFoods} setAutoRun={props.setAutoRun}/>
         </Layout>
     )
 }
-let fdata ="[\"{\\\"id\\\": \\\"LGM CHILI OIL SAUCE IN JAR\\\", \\\"description\\\": \\\"Chili oil sauce\\\", \\\"quantity\\\": \\\"1\\\", \\\"quantityType\\\": \\\"Jars\\\", \\\"expiration\\\": \\\"365\\\", \\\"shortName\\\": \\\"chili\\\"}\",\"{\\\"id\\\": \\\"KADOYA SESAME OIL\\\", \\\"description\\\": \\\"Kadoya Sesame Oil\\\", \\\"quantity\\\": \\\"15\\\", \\\"quantityType\\\": \\\"Fl Oz\\\", \\\"expiration\\\": \\\"180\\\", \\\"shortName\\\": \\\"oil\\\"}\",\"{\\\"id\\\": \\\"WU-MU CN BEIJING-NOODLE\\\", \\\"description\\\": \\\"Beijing Noodles\\\", \\\"quantity\\\": \\\"1\\\", \\\"quantityType\\\": \\\"Boxes\\\", \\\"expiration\\\": \\\"60\\\", \\\"shortName\\\": \\\"noodle\\\"}\",\"{\\\"id\\\": \\\"ROSEMARY PASTURE RAISED EGGS\\\", \\\"description\\\": \\\"Rosemary Pasture Raised Eggs\\\", \\\"quantity\\\": \\\"6\\\", \\\"quantityType\\\": \\\"Count\\\", \\\"expiration\\\": \\\"20\\\", \\\"shortName\\\": \\\"egg\\\"}\",\"{\\\"id\\\": \\\"HORIZON\\\", \\\"description\\\": \\\"Horizon Milk\\\", \\\"quantity\\\": \\\"1\\\", \\\"quantityType\\\": \\\"Gallons\\\", \\\"expiration\\\": \\\"10\\\", \\\"shortName\\\": \\\"milk\\\"}\",\"{\\\"id\\\": \\\"HORIZON ORGANIC WHOLE MILK\\\", \\\"description\\\": \\\"Horizon Organic Whole Milk\\\", \\\"quantity\\\": \\\"1\\\", \\\"quantityType\\\": \\\"Gallons\\\", \\\"expiration\\\": \\\"10\\\", \\\"shortName\\\": \\\"milk\\\"}\",\"{\\\"id\\\": \\\"GREEN SEEDLESS GRAPE\\\", \\\"description\\\": \\\"Green Seedless Grapes\\\", \\\"quantity\\\": \\\"15\\\", \\\"quantityType\\\": \\\"Ounces\\\", \\\"expiration\\\": \\\"8\\\", \\\"shortName\\\": \\\"grape\\\"}\",\"{\\\"id\\\": \\\"ORGANIC BABY SPRING MIX\\\", \\\"description\\\": \\\"Organic Baby Spring Vegetables Mix\\\", \\\"quantity\\\": \\\"10\\\", \\\"quantityType\\\": \\\"Ounces\\\", \\\"expiration\\\": \\\"6\\\", \\\"shortName\\\": \\\"salad\\\"}\"]";
+let fdata ="[{\"id\":\"LGM CHILI OIL SAUCE IN JAR\",\"description\":\"Chili oil sauce\",\"quantity\":\"1\",\"quantityType\":\"Jars\",\"expiration\":\"365\",\"shortName\":\"chili\"},{\"id\":\"KADOYA SESAME OIL\",\"description\":\"Kadoya Sesame Oil\",\"quantity\":\"15\",\"quantityType\":\"Fl Oz\",\"expiration\":\"180\",\"shortName\":\"oil\"},{\"id\":\"WU-MU CN BEIJING-NOODLE\",\"description\":\"Beijing Noodles\",\"quantity\":\"1\",\"quantityType\":\"Boxes\",\"expiration\":\"60\",\"shortName\":\"noodle\"},{\"id\":\"ROSEMARY PASTURE RAISED EGGS\",\"description\":\"Rosemary Pasture Raised Eggs\",\"quantity\":\"6\",\"quantityType\":\"Count\",\"expiration\":\"20\",\"shortName\":\"egg\"},{\"id\":\"HORIZON\",\"description\":\"Horizon Milk\",\"quantity\":\"1\",\"quantityType\":\"Gallons\",\"expiration\":\"10\",\"shortName\":\"milk\"},{\"id\":\"HORIZON ORGANIC WHOLE MILK\",\"description\":\"Horizon Organic Whole Milk\",\"quantity\":\"1\",\"quantityType\":\"Gallons\",\"expiration\":\"10\",\"shortName\":\"milk\"},{\"id\":\"GREEN SEEDLESS GRAPE\",\"description\":\"Green Seedless Grapes\",\"quantity\":\"15\",\"quantityType\":\"Ounces\",\"expiration\":\"8\",\"shortName\":\"grape\"},{\"id\":\"ORGANIC BABY SPRING MIX\",\"description\":\"Organic Baby Spring Vegetables Mix\",\"quantity\":\"10\",\"quantityType\":\"Ounces\",\"expiration\":\"6\",\"shortName\":\"salad\"}]"
 
 function List(props){
   let parsedFoodData = JSON.parse(fdata);
@@ -58,6 +53,8 @@ function List(props){
                 });
         }
       }
+      props.setAutoRun(true);
+      props.setScannedFoods(props.foods.Products);
     }
       /*
         console.log(values);
@@ -78,19 +75,19 @@ function List(props){
 */
 
     var ls = window.localStorage;
-    if(props.foods)
-      console.log(props.foods.Products);
+    if(props)
+      console.log(parsedFoodData);
     return(
         <form  onSubmit={handleSubmit(onSubmit)}>
           <Row>
-          <Col span={10}>Product Name</Col>
+          <Col xs={5} sm={5} md={6} lg={6} xl={6}>Product Name</Col>
+          <Col xs={11} sm={11} md={8} lg={8} xl={8}>Expiration Date</Col>
           <Col span={4}>Quantity</Col>
-          <Col span={10}>Expiration Date</Col>
           </Row>
             {props.foods && props.foods.Products.map((val, index)=>{
               var quantity = val.quantity;
-             return <Row className="listli" key={index}>
-                    <Col span={10}><Form.Item>
+             return <Row className="listli" key={index} gutter={16}>
+                    <Col xs={5} sm={5} md={6} lg={6} xl={6}><Form.Item>
                         <Input name={`foodname[${index}]`}
                         id={`foodname-${index}`}
                         className = "foodname"
@@ -99,7 +96,17 @@ function List(props){
                         })}
                         defaultValue = {val.shortName} />
                     </Form.Item></Col>
-                    <Col span={4}><Form.Item className = "quantitycontainer">
+
+                    <Col xs={11} sm={11} md={8} lg={8} xl={8}>
+                    <Form.Item><DatePicker defaultValue={moment(selectedDate[index], dateFormat)}
+                    onChange={e => {
+                      var stateBuf = JSON.parse(JSON.stringify(selectedDate));
+                      console.log(e);
+                      stateBuf[index] = formatDate(e._d);
+                      setSelectedDate(stateBuf);}
+                    }/></Form.Item>
+                    </Col>
+                    <Col span={4} className="quantityCol"><Form.Item className = "quantitycontainer">
                         <InputNumber
                             type="number"
                             name={`foodquantity[${index}]`}
@@ -115,32 +122,24 @@ function List(props){
                             defaultValue = {val.quantity}
                         />
                         <label>{
-                          val.quantityType == 'Count' ? 'ct' :
-                          val.quantityType == 'Pounds' ? 'lb' :
-                          val.quantityType == 'Boxes' ? 'bx' :
-                          val.quantityType == 'Gallons' ? 'gl' :
-                          val.quantityType == 'Fl Oz' ? 'oz' :
-                          val.quantityType == 'Ounces' ? 'oz' :
-                          val.quantityType == 'Packs' ? 'pk' :
-                          val.quantityType == 'Jars' ? 'jr' : ""
+                          val.quantityType == 'Count' ? ' ct' :
+                          val.quantityType == 'Pounds' ? ' lb' :
+                          val.quantityType == 'Boxes' ? ' bx' :
+                          val.quantityType == 'Gallons' ? ' gl' :
+                          val.quantityType == 'Fl Oz' ? ' oz' :
+                          val.quantityType == 'Ounces' ? ' oz' :
+                          val.quantityType == 'Packs' ? ' pk' :
+                          val.quantityType == 'Jars' ? ' jr' : ""
                           }</label>
                     </Form.Item>
-        
-                    </Col>
-                    <Col span={8}>
-                    <Form.Item><DatePicker defaultValue={moment(selectedDate[index], dateFormat)}
-                    onChange={e => {
-                      var stateBuf = JSON.parse(JSON.stringify(selectedDate));
-                      stateBuf[index] = formatDate(e._d);
-                      setSelectedDate(stateBuf);}
-                    }/></Form.Item>
+
                     </Col>
                 </Row>
             }
             )
             }
 
-            
+
             <Button type="primary" htmlType="submit">
            Submit
          </Button>

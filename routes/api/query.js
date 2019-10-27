@@ -6,11 +6,12 @@ router.get('/test', (req, res) => res.send('Hey!'));
 router.post('/compute', (req, res) => {
   console.log(req.body.Products);
   var options = {
-    uri: "http://18.217.33.249:8444",
+    uri: "https://18.217.33.249:8444",
     method: "POST",
     headers: {
       "Content-Type":"application/json"
     },
+    strictSSL: false,
     json: {
     	"Products":req.body.Products
         }
@@ -19,11 +20,18 @@ router.post('/compute', (req, res) => {
   request(options, (err, resp, body) => {
     console.log(resp);
     console.log(err);
-    res.send(resp);
+    if (err) {
+      res.send(err);
+    }
+    else {res.send(resp);
+    }
   });
 
   //res.send("Test");
 });
+router.get('/compute', (req, res)=>{
+  res.send("Compute get!");
+})
 router.post('/scan', (req, res) => {
 
   var options = {

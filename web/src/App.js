@@ -12,18 +12,22 @@ import Fridge from './components/Fridge/index';
 
 function App() {
   const [foods, setFoods] = useState();
+  const [scannedFoods, setScannedFoods] = useState();
+
+  const [autoRun, setAutoRun] = useState(false);
   const handleFoodPass = (foods) => {
   }
   return (
     <div className="App">
       <Router>
         <div>
-        {foods ? <Redirect to='/scannedlist' /> : ""}
+        {foods ? <Redirect to='/scannedlist' setScannedFoods={setScannedFoods}/> : ""}
+        {scannedFoods ? <Redirect to='/plan'/> : ""}
           <Route exact path='/' component={Home} />
           <Route exact path='/fridge' component={Fridge} />
           <Route exact path='/scan' render={() => <ScanPage setFoods={setFoods}/>} />
-          <Route exact path='/scannedlist' render={() => <ScannedList foods={foods}/>} />
-          <Route exact path='/plan' render={() => <Plan/>} />
+          <Route exact path='/scannedlist' render={() => <ScannedList foods={foods} setScannedFoods={setScannedFoods} setAutoRun={setAutoRun}/>} />
+          <Route exact path='/plan' render={() => <Plan scannedFoods={scannedFoods} autoRun={autoRun}/>} />
       </div>
       </Router>
     </div>
