@@ -52,9 +52,6 @@ function ScanPage(props) {
               console.log(resp);
               if (resp) {
               message.success(`Successfully scanned`);
-              for (let i  = 0 ; i < resp.body.body.body.Products.length; i++) {
-                let k = JSON.parse(resp.body.body.body.Products[i]);
-              }
               props.setFoods({Products: resp.body.body.body.Products});
               setLoading(false);
               setTimeout(function() {
@@ -67,7 +64,6 @@ function ScanPage(props) {
             }
             });
           });
-
       } else if (info.file.status === 'error') {
         message.error(`${info.file.name} file upload failed.`);
       }
