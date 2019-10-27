@@ -30,7 +30,7 @@ function Plan(props){
     return(
       <Layout>
           <div className="Plan">
-            <h1 id='PlanTitle'>Here's your meal plan </h1><Icon type="smile" theme="twoTone" twoToneColor="#88d657" id='smileIcon'/>
+            <h1 id='PlanTitle'>Your meal plan </h1><Icon type="smile" theme="twoTone" twoToneColor="#88d657" id='smileIcon'/>
             <div className='mealBlock'>
               <h2>Today's suggested meals</h2>
               <Meals meals={someFood}/>
