@@ -1,5 +1,8 @@
 import React from 'react';
 import './index.scss';
+import { Upload, message, Button } from 'antd';
+import {Link} from "react-router-dom";
+import 'antd/dist/antd.css';
 import Layout from '../Layout';
 function Home() {
     return (
@@ -8,10 +11,15 @@ function Home() {
             <section className="Hero">
             <div src="/food.jpg" id='heroImage'>
             <div className='heroText'><h1>OptiEat</h1>
-            <p>Optimizing food use with Machine Learning and Advanced Algorithms</p></div>
-
+            <p style={{textOverlow: "wrap"}}>Optimizing food use with Machine Learning and Advanced Algorithms</p></div>
+            <Link to="/scan">
+            <Button id='StartScannignButton'>
+                Create <br/>Meal Plan
+            </Button>
+            </Link>
             </div>
             </section>
+
             </div>
         </Layout>
     )
