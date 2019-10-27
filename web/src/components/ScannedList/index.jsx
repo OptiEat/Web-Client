@@ -22,15 +22,24 @@ function List(props){
     const [selectedDate, setSelectedDate] = useState([]);
     const onSubmit = values => {
         console.log(values);
+        console.log(selectedDate);
     };
     var ls = window.localStorage;
     
-    console.log(ls);
     return(
         <form onSubmit={handleSubmit(onSubmit)}>
             <ul className="listul">
+            <li className="listli">
+                <p>Product Name</p>
+                <p>Quantity</p>
+                <p>Expiration Date</p>
+            </li>
             {props.foods && props.foods.Products.map((val, index)=>{
               val=JSON.parse(val);
+              var date = new Date();
+              if(!selectedDate[index]){
+                date = new Date(date.getTime() + 1000 * 60 * 60 * 24 * val.expiration);
+              }
               if(ls.getItem(val.shortName))
                 ls.setItem(val.shortName, parseInt(ls.getItem(val.shortName)) + parseInt(val.quantity)) ;
               else
@@ -44,23 +53,27 @@ function List(props){
                         })}
                         defaultValue = {val.shortName}
                     />
-                    <input
-                        type="number"
-                        name={`foodquantity[${index}]`}
-                        className = "foodquantity"
-                        ref={register({
-                        required: 'Required',
-                        pattern: {
-                            value: /^[0-9]*$/gm,
-                            message: "Numbers Only"
-                        }
-                        })}
-                        defaultValue = {val.quantity}
-                    />
-                    <DatePicker
+                    <div classname = "quantitycontainer">
+                        <input
+                            type="number"
+                            name={`foodquantity[${index}]`}
+                            className = "foodquantity"
+                            ref={register({
+                            required: 'Required',
+                            pattern: {
+                                value: /^[0-9]*$/gm,
+                                message: "Numbers Only"
+                            }
+                            })}
+                            defaultValue = {val.quantity}
+                        />
+                    </div>
+                    <input 
+                        type = "date"
                         className = "expirationdate"
-                        selected={selectedDate[index] ? new Date(selectedDate[index]) : new Date(new Date().setDate(new Date().getDate() + val.expiration))}
-                        onChange={date => {
+                        value={selectedDate[index] ? formatDate(selectedDate[index]) : formatDate(date) }
+                        onChange={e => {
+                                var date = e.target.value;
                                 var stateBuf = JSON.parse(JSON.stringify(selectedDate));
                                 stateBuf[index] = new Date(date);
                                 setSelectedDate(stateBuf);
@@ -77,5 +90,13 @@ function List(props){
     )
 
 }
-
+function formatDate(date) {
+    date = new Date(date);
+    console.log(date);
+    var day = date.getDate();
+    var month = date.getMonth();
+    var year = date.getFullYear();
+  
+    return year.toString() + '-' + month.toString().padStart(2, 0) + '-' + day.toString().padStart(2, 0);
+  }
 export default ScannedList;
