@@ -92,7 +92,7 @@ function Plan(props){
             </div>
 
             {recipes && days.map((val, index)=>
-              <div className='mealBlock'>
+              <div className='mealBlock' key={index}>
                 <h2>Day {index + 1} suggested meals</h2>
                 <Meals meals={days[index]} day={index} setRecipes={setRecipes}/>
             </div>
