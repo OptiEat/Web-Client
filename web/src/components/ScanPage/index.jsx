@@ -7,7 +7,8 @@ import useForm from 'react-hook-form'
 
 const request = require('request');
 const axios = require('axios');
-
+const listOfFunnyMessages = ["The monkeys are hard at work analyzing your receipt", "To be or not to be", "Finding the answer to the universe", "Why are we here?", "Is that an UFO?",
+"Don't be eye candy, be soul food!", "Isn't this app cool", "We are smashing keyboards to find the text in the receipt", "A boiled egg is hard to beat", "An apple a day keeps the doctor away"]
 const dummyRequest = ({ file, onSuccess }) => {
   setTimeout(() => {
     onSuccess("ok");
@@ -22,13 +23,21 @@ function ScanPage(props) {
   }
   const [loading, setLoading] = useState(false);
   const [scanText, setScanText] = useState('Scan');
+  const [funText, setFunText] = useState("The monkeys are hard at work analyzing your receipt");
+let funnyMessageTimer = "";
   const [imgSrc,  setImgSrc] = useState("");
   const [styles, setStyles] = useState({opacity:1, top: "auto", bottom:"50%", position: "absolute"});
+  const handleClick = (e)=> {
+    funnyMessageTimer=setInterval(function(){
+      setFunText(listOfFunnyMessages[Math.floor(Math.random() * listOfFunnyMessages.length)]);
+    }, 3000);
+  }
   const uploadProps = {
     name: 'file',
     customRequest: dummyRequest,
     //listType: 'picture',
     onChange(info) {
+
       if (info.file.status !== 'uploading') {
         setLoading(true);
         setScanText("");
@@ -39,8 +48,6 @@ function ScanPage(props) {
         toBase64(info.file.originFileObj).then(base64Data => {
           setImgSrc(base64Data);
           base64Data = base64Data.substring(22);
-          //props.setFoods({Products: JSON.parse(data)});
-
           var options = {
             url: "https://optieat.herokuapp.com/api/query/scan/",
             method: "POST",
@@ -77,9 +84,11 @@ function ScanPage(props) {
           <section className="ScannedImageDisplay">
             <img id='ScannedImage' src={imgSrc} />
           </section>
+          {loading ? <p id='funnyMessage'>{funText}</p> : ""}
           <div id='UploadDiv' style={styles}>
+
           <Upload {...uploadProps} id='UploadWrapper'>
-            <Button id='ScanReceiptButton' loading={loading}>{scanText}
+            <Button id='ScanReceiptButton' loading={loading} onClick={handleClick}>{scanText}
             </Button>
           </Upload>
           </div>

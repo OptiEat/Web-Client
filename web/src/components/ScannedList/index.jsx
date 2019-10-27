@@ -15,10 +15,8 @@ function ScannedList(props) {
         </Layout>
     )
 }
-let fdata ="[{\"id\":\"LGM CHILI OIL SAUCE IN JAR\",\"description\":\"Chili oil sauce\",\"quantity\":\"1\",\"quantityType\":\"Jars\",\"expiration\":\"365\",\"shortName\":\"chili\"},{\"id\":\"KADOYA SESAME OIL\",\"description\":\"Kadoya Sesame Oil\",\"quantity\":\"15\",\"quantityType\":\"Fl Oz\",\"expiration\":\"180\",\"shortName\":\"oil\"},{\"id\":\"WU-MU CN BEIJING-NOODLE\",\"description\":\"Beijing Noodles\",\"quantity\":\"1\",\"quantityType\":\"Boxes\",\"expiration\":\"60\",\"shortName\":\"noodle\"},{\"id\":\"ROSEMARY PASTURE RAISED EGGS\",\"description\":\"Rosemary Pasture Raised Eggs\",\"quantity\":\"6\",\"quantityType\":\"Count\",\"expiration\":\"20\",\"shortName\":\"egg\"},{\"id\":\"HORIZON\",\"description\":\"Horizon Milk\",\"quantity\":\"1\",\"quantityType\":\"Gallons\",\"expiration\":\"10\",\"shortName\":\"milk\"},{\"id\":\"HORIZON ORGANIC WHOLE MILK\",\"description\":\"Horizon Organic Whole Milk\",\"quantity\":\"1\",\"quantityType\":\"Gallons\",\"expiration\":\"10\",\"shortName\":\"milk\"},{\"id\":\"GREEN SEEDLESS GRAPE\",\"description\":\"Green Seedless Grapes\",\"quantity\":\"15\",\"quantityType\":\"Ounces\",\"expiration\":\"8\",\"shortName\":\"grape\"},{\"id\":\"ORGANIC BABY SPRING MIX\",\"description\":\"Organic Baby Spring Vegetables Mix\",\"quantity\":\"10\",\"quantityType\":\"Ounces\",\"expiration\":\"6\",\"shortName\":\"salad\"}]"
 
 function List(props){
-  let parsedFoodData = JSON.parse(fdata);
     const { register, handleSubmit, setValue } = useForm();
     const [selectedDate, setSelectedDate] = useState(
         props.foods && props.foods.Products.map((val) => {
@@ -30,7 +28,7 @@ function List(props){
     console.log(selectedDate);
 
     const onSubmit = (values) => {
-      let n = parsedFoodData.length;
+      let n = props.foods.Products.length;
       console.log(values);
       console.log($("#foodname-0"));
       for (let index = 0; index < n; index++) {
@@ -75,8 +73,6 @@ function List(props){
 */
 
     var ls = window.localStorage;
-    if(props)
-      console.log(parsedFoodData);
     return(
         <form  onSubmit={handleSubmit(onSubmit)}>
           <Row>

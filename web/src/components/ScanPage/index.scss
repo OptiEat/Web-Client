@@ -7,8 +7,13 @@ $half:calc(50% - 140px / 2);
   #ScannedImageDisplay {
 
   }
+  #funnyMessage {
+    margin-top: 10px;
+    margin-bottom: 50px;
+    font-size: 26px;
+  }
   #ScannedImage {
-    max-width: 400px;
+    max-width: 350px;
     width: calc(100% - 30px);
   }
     #ScanReceiptButton {
@@ -27,4 +32,5 @@ $half:calc(50% - 140px / 2);
     left:$half;
     width: 150px;
   }
+
 }

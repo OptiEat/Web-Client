@@ -17,6 +17,10 @@ function Plan(props){
     //console.log(props.foods.Products);
     const [funText, setFunText] = useState("Cooking the chicken breast");
     const [recipes, setRecipes] = useState();
+    const [wasteAmount, setWasteAmount] = useState("This saves <span id='percent'>" + 0.38 * 100 + "%</span> of food waste!");
+    const [wasteAmount2, setWasteAmount2] = useState();
+    const [wasteAmount3, setWasteAmount3] = useState();
+    const [wasteAmount4, setWasteAmount4] = useState();
     let funnyMessageTimer = "";
     const handleClick = (e) => {
       //use localstorage to handle this click
@@ -25,6 +29,7 @@ function Plan(props){
       funnyMessageTimer=setInterval(function(){
         setFunText(listOfFunnyMessages[Math.floor(Math.random() * listOfFunnyMessages.length)]);
       }, 3000);
+
 
       // get data from localStorage
       let ls = window.localStorage;
@@ -55,6 +60,17 @@ function Plan(props){
           {
             resp.body.body.Recipes.forEach((val) => {val.eaten=false});
             setRecipes(resp.body.body.Recipes);
+            let wasteP = resp.body.body.PercentageOfWaste;
+            let extras = 0.38 - wasteP;
+            if (extras < 0) {
+              extras = 0.05;
+            }
+            setWasteAmount({
+              p1:"The average person wastes ",
+              p2:"38% ",
+              p3:"of food. You waste only " ,
+              p4:wasteP*100 + "%!"
+            });
             localStorage.setItem('mealPlan', JSON.stringify(resp.body.body.Recipes));
           }
           console.log(err);
@@ -93,6 +109,7 @@ function Plan(props){
             <div>
 <h1 id='PlanTitle'>Your meal plan </h1><Icon type="smile" theme="twoTone" twoToneColor="#88d657" id='smileIcon'/>
             </div>
+            <h3>{wasteAmount.p1}<span id='badPercent'>{wasteAmount.p2}</span>{wasteAmount.p3}<span id='goodPercent'>{wasteAmount.p4}</span></h3>
 
             {recipes && days.map((val, index)=>
               <div className='mealBlock' key={index}>
