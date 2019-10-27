@@ -7,6 +7,8 @@ import Home from './components/Home/index';
 //import Dashboard from './components/Dashboard/index';
 import ScanPage from './components/ScanPage/index';
 import ScannedList from './components/ScannedList/index';
+import Plan from './components/Plan/index';
+import Fridge from './components/Fridge/index';
 
 function App() {
   const [foods, setFoods] = useState();
@@ -18,9 +20,10 @@ function App() {
         <div>
         {foods ? <Redirect to='/scannedlist' /> : ""}
           <Route exact path='/' component={Home} />
-          <Route exact path='/fridge' component={Home} />
+          <Route exact path='/fridge' component={Fridge} />
           <Route exact path='/scan' render={() => <ScanPage setFoods={setFoods}/>} />
           <Route exact path='/scannedlist' render={() => <ScannedList foods={foods}/>} />
+          <Route exact path='/plan' render={() => <Plan/>} />
       </div>
       </Router>
     </div>

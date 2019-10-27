@@ -10,16 +10,19 @@ function Header() {
       <Menu mode="horizontal">
         <Menu.Item>
           <a href="fridge">
+          <Icon type="appstore" />
           Fridge
           </a>
         </Menu.Item>
         <Menu.Item>
           <a href="scan">
+          <Icon type="search" />
           Scan
           </a>
         </Menu.Item>
         <Menu.Item>
           <a href="plan">
+          <Icon type="calendar" />
           Plan
           </a>
         </Menu.Item>

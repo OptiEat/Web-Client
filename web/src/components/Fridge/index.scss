@@ -1,0 +1,19 @@
+.Fridge {
+  text-align: left;
+  max-width: 1200px;
+  width: calc(100% - 30px);
+  margin: auto;
+  .fridgeItem {
+    height:100px;
+
+
+    padding: 20px;margin-bottom: 40px;
+  }
+  .fridgeInnerItem {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius:5px;
+    padding:10px;
+
+
+  }
+}

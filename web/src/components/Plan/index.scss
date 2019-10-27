@@ -1,0 +1,31 @@
+.Plan {
+  text-align: left;
+  max-width: 1200px;
+  width: calc(100% - 30px);
+  margin: auto;
+
+  padding: 20px;
+  #PlanTitle {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    display: inline-block;;
+  }
+  #smileIcon {
+    font-size: 26px;
+    margin-left: 10px;
+    vertical-align: -5px;
+  }
+  .mealBlock {
+      margin-bottom: 20px;
+  }
+  .mealImage {
+
+    width: 100%;
+    max-width: 400px;
+  }
+  .regenMeal
+  {
+    margin-top: 25px;
+    font-size:24px;
+    height: 40px;
+  }
+}
