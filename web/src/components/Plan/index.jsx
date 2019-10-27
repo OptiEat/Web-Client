@@ -56,13 +56,13 @@ function Plan(props){
           setLoading(false);
           if(body.body)
             setRecipes(resp.body.body.Recipes);
-          else
-            setRecipes(JSON.parse(returnjson()));
           console.log(err);
         }
         else {
           message.error("Scan failed");
         }
+        setLoading(false);
+        setRegenMealText("Regenerate Meal Plan");
       });
 
     }
@@ -76,6 +76,8 @@ function Plan(props){
       }
     }   
   }
+
+  if(props.autoRun) handleClick(new Event());
 
     return(
       <Layout>
@@ -107,7 +109,7 @@ function Meals(props) {
               <center>
               <img className='mealImage' src={val.image} />
               <p className='ingredientsInfo'>Ingredients: {val.ingredientLines}</p>
-              <a href={val.uri}><Button className="tryRecipeButton">Try the recipe!</Button></a></center>
+              <a href={val.shareAs} target="_blank"><Button className="tryRecipeButton">Try the recipe!</Button></a></center>
             </Panel>
         })
 
