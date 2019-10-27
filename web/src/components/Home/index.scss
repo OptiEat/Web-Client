@@ -1,9 +1,38 @@
 .Home {
     background-color: #fefefe;
     color:rgb(51,56,68);
-    min-height: 100vh;
     text-align: left;
+    max-width: 1200px;
+    width: calc(100% - 30px);
+    margin: auto;
     .Hero {
-
+      #heroImage {
+        height:100vh;
+        background-image: url('food.jpg');
+        width: 100vw;
+        background-size: cover;
+        position: absolute;
+        left:0;
+        top:0px;
+      }
+      .heroText {
+        padding:150px;
+        padding-left: 0px;
+        padding-right: 0px;
+        margin-left: 10%;
+        margin-right: 10%;
+      }
+      h1 {
+        font-size:120px;
+        background-color:transparent;
+        color:#fefefe;
+      }
+      p {
+        font-size:64px;
+        max-width:800px;
+        background-color:rgba(0,0,0,0);
+          color:#fefefe;
+      }
     }
 }
+.Layout {}

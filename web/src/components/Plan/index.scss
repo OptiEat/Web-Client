@@ -5,6 +5,9 @@
   margin: auto;
 
   padding: 20px;
+  #funnyMessage {
+    font-size:32px;
+  }
   #PlanTitle {
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     display: inline-block;;
@@ -17,14 +20,21 @@
   .mealBlock {
       margin-bottom: 20px;
   }
+  .ingredientsInfo {
+    font-size:24px;
+  }
+  .tryRecipeButton {
+    font-size:24px;
+    height:40px;
+  }
   .mealImage {
-
+    margin-bottom: 15px;
     width: 100%;
     max-width: 400px;
   }
   .regenMeal
   {
-    margin-top: 25px;
+    margin-top: 15px;
     font-size:24px;
     height: 40px;
   }

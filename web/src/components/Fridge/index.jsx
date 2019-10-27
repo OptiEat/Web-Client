@@ -21,9 +21,6 @@ function Fridge(props){
           <div className="Fridge">
             <h1>What's in your fridge?</h1>
             <Row>
-            {
-
-            }
             {keys.map((val, index) => {
               return <Col span ={12} className="fridgeItem">
                 <div class='fridgeInnerItem'>

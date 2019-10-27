@@ -1,7 +1,14 @@
 .Header {
+  background-color: #fefefe;
+  position: relative;
+  z-index: 9999;
   #HeaderTitle {
     color:rgb(51,56,68);
-    padding-top: 15px;
+    padding-top: 10px;
+    transition: color 0.3s;
+  }
+  #HeaderTitle:hover {
+    color:#88d657;
   }
   .ant-menu-item {
     width: 110px;

@@ -30,8 +30,6 @@ function ScanPage(props) {
     //listType: 'picture',
     onChange(info) {
       if (info.file.status !== 'uploading') {
-        console.log(info.file, info.fileList);
-        console.log("test");
         setLoading(true);
         setScanText("");
       }
@@ -41,9 +39,8 @@ function ScanPage(props) {
         toBase64(info.file.originFileObj).then(base64Data => {
           setImgSrc(base64Data);
           base64Data = base64Data.substring(22);
-          console.log(base64Data);
-          props.setFoods({Products: JSON.parse(data)});
-/*
+          //props.setFoods({Products: JSON.parse(data)});
+
           var options = {
             url: "https://optieat.herokuapp.com/api/query/scan/",
             method: "POST",
