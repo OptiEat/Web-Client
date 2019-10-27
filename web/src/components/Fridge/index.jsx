@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import {Input,  Row, Col, Button , Collapse, Icon} from 'antd';
-
+import {Input,  Row, Col, Button , Collapse, Icon, DatePicker,Form, InputNumber} from 'antd';
+import moment from 'moment';
 import 'antd/dist/antd.css';
-import DatePicker from 'react-datepicker';
 import './index.scss';
 import Layout from '../Layout';
 const { Panel } = Collapse;
+const dateFormat = 'YYYY/MM/DD';
 
 let fridgeContents = [
   {name:"Milk", expiration:"10/29/2019"}, {name:"Chicken", expiration:"10/29/2019"}, {name:"Lettuce", expiration:"10/29/2019"},{name:"Olive Oil", expiration:"12/02/2019"},
@@ -25,10 +25,29 @@ function Fridge(props){
               if(tval != 'mealPlan') {
               let val = JSON.parse(ls[tval]);
               return <Col span ={12} className="fridgeItem" key={index}>
-                <div class='fridgeInnerItem'>
+                <div className='fridgeInnerItem'>
                 <h3>{tval.substring(0,1).toUpperCase() + tval.substring(1)}</h3>
-                <span>Expiration: {val['expiration']}</span>
-                <p>Amount: {val['quantity']} {val['quantityType'] == 'Count' ? tval + "s" : val['quantityType']}</p>
+                <span>Expiration: 
+                  <DatePicker 
+                    defaultValue={moment(val['expiration'], dateFormat)} 
+                    onChange={e => {
+                      console.log(e);
+                      val['expiration'] = formatDate(e._d);
+                      ls[tval] = JSON.stringify(val);
+                    }
+                    }
+                  />
+                </span> {/*val['expiration']*/}
+                <p>Amount: <InputNumber
+                            type="number"
+                            defaultValue = {val.quantity}
+                            onChange = {e => {
+                              console.log(e);
+                              val['quantity'] = e;
+                              ls[tval] = JSON.stringify(val);
+                            }}
+                        />
+                         {val['quantityType'] == 'Count' ? tval + "s" : val['quantityType']}</p>
                 </div>
               </Col>
             }})}
@@ -59,11 +78,12 @@ function Meals(props) {
 
 function formatDate(date) {
   date = new Date(date);
+
   var day = date.getDate();
   var month = date.getMonth();
   var year = date.getFullYear();
-
-  return   day.toString().padStart(2, 0) + '/' + month.toString().padStart(2, 0) + '/' + year.toString();
+  month++;
+  return year.toString() + '-' + month.toString().padStart(2, 0) + '-' + day.toString().padStart(2, 0);
 }
 
 export default Fridge;
