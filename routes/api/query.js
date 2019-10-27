@@ -24,6 +24,9 @@ router.post('/compute', (req, res) => {
 
   //res.send("Test");
 });
+router.get('/compute', (req, res)=>{
+  res.send("Compute get!");
+})
 router.post('/scan', (req, res) => {
 
   var options = {
