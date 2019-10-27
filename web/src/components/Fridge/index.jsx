@@ -38,6 +38,7 @@ function Fridge(props){
                   />
                 </span> {/*val['expiration']*/}
                 <p>Amount: <InputNumber
+                            min={1}
                             type="number"
                             defaultValue = {val.quantity}
                             onChange = {e => {
