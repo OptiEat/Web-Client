@@ -52,8 +52,11 @@ function Plan(props){
           message.success(`Successfully Created Meal Plan!`);
           setLoading(false);
           if(body.body)
+          {
+            resp.body.body.Recipes.forEach((val) => {val.eaten=false});
             setRecipes(resp.body.body.Recipes);
             localStorage.setItem('mealPlan', JSON.stringify(resp.body.body.Recipes));
+          }
           console.log(err);
         }
         else {
@@ -77,7 +80,7 @@ function Plan(props){
   }
   useEffect(() => {
     // Update the document title using the browser API
-    let storedRecipes = JSON.parse(localStorage.getItem('mealPlan'));
+    let storedRecipes = localStorage.getItem('mealPlan') && JSON.parse(localStorage.getItem('mealPlan'));
     console.log(storedRecipes);
     setRecipes(storedRecipes);
     if (props.autoRun == true) {
@@ -114,11 +117,21 @@ function Meals(props) {
     let productsData = [];
     let mealPlan = JSON.parse(ls['mealPlan']);
     for (let key of foodKeys) {
-      mealPlan[index]['effectiveWeights'].forEach((val)=>{
-        if(val[key]) ls[key] = parseInt(ls[key]) - parseInt(val[key]);
+      mealPlan[index]['effectiveWeight'].forEach((val)=>{
+        let newQ;
+        console.log(ls[key] + ' ' + val[key]);
+        if(val[key]){
+           newQ = parseInt(JSON.parse(ls[key]).quantity) - parseInt(val[key]);
+           let keyC = JSON.parse(ls[key]);
+           keyC.quantity = newQ;
+           if(newQ == 0)
+            ls.removeItem(key);
+          else
+           ls[key] = JSON.stringify(keyC);
+        }
       });
     }
-    delete mealPlan[index];
+    mealPlan[index].eaten = true;
     ls['mealPlan'] = JSON.stringify(mealPlan);
     props.setRecipes(mealPlan);
     console.log(index);
@@ -128,6 +141,8 @@ function Meals(props) {
     <Collapse accordion>
       {props.meals.map((val, index) =>
         {
+          if(val.eaten == false)
+          {
           return <Panel header={val.label} key={"" + index}>
               <center>
               <img className='mealImage' src={val.image} />
@@ -136,6 +151,8 @@ function Meals(props) {
               <Button className="deductButton"  type="danger" onClick={() => {handleDeduct(props.day*3+index)}}>Move to Stomach!</Button>
               </center>
             </Panel>
+          }
+            return "";
         })
 
       }
