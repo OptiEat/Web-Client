@@ -42,7 +42,8 @@ function ScanPage(props) {
           setImgSrc(base64Data);
           base64Data = base64Data.substring(22);
           console.log(base64Data);
-
+          props.setFoods({Products: JSON.parse(data)});
+/*
           var options = {
             url: "https://optieat.herokuapp.com/api/query/scan/",
             method: "POST",
@@ -68,6 +69,7 @@ function ScanPage(props) {
               message.error("Scan failed");
             }
             });
+            */
           });
 
       } else if (info.file.status === 'error') {

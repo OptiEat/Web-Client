@@ -24,12 +24,13 @@ function List(props){
         console.log(values);
     };
 
-    
+    console.log(props.foods.Products);
     return(
         <form onSubmit={handleSubmit(onSubmit)}>
             <ul class="listul">
-            {props.foods && props.foods.map((val, index)=>{
-             return <li class="listli" key={index}>  
+            {props.foods && props.foods.Products.map((val, index)=>{
+              val=JSON.parse(val);
+             return <li class="listli" key={index}>
                     <input
                         name={`foodname[${index}]`}
                         className = "foodname"
@@ -53,23 +54,23 @@ function List(props){
                     />
                     <DatePicker
                         className = "expirationdate"
-                        selected={selectedDate[index] ? new Date(selectedDate[index]) : new Date( (new Date()).getDate() + val.expiration)}
+                        selected={selectedDate[index] ? new Date(selectedDate[index]) : new Date(new Date().setDate(new Date().getDate() + val.expiration))}
                         onChange={date => {
                                 var stateBuf = JSON.parse(JSON.stringify(selectedDate));
                                 stateBuf[index] = new Date(date);
-                                setSelectedDate(date);
+                                setSelectedDate(stateBuf);
                             }}
-                        
+
                     />
                 </li>
-            }  
+            }
             )
             }
             </ul>
             <input type="submit" className="submitButton"/>
         </form>
     )
-    
+
 }
 
 export default ScannedList;
