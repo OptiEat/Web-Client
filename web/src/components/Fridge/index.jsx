@@ -25,9 +25,9 @@ function Fridge(props){
               return <Col span ={12} className="fridgeItem">
                 <div class='fridgeInnerItem'>
                 <h3>{val.substring(0,1).toUpperCase() + val.substring(1)}</h3>
-                <span>Expiration:</span>
+                <span>Expiration: {formatDate(new Date(JSON.parse(ls[val])['expiration']).toString())}</span>
                 <p>{val.expiration}</p>
-                <p>Amount: {val.quantity}</p>
+                <p>Amount: {JSON.parse(ls[val])['quantity']}</p>
                 </div>
               </Col>
             })}
@@ -55,6 +55,15 @@ console.log(props.meals);
       }
     </Collapse>
   )
+}
+
+function formatDate(date) {
+  date = new Date(date);
+  var day = date.getDate();
+  var month = date.getMonth();
+  var year = date.getFullYear();
+
+  return   day.toString().padStart(2, 0) + '/' + month.toString().padStart(2, 0) + '/' + year.toString();
 }
 
 export default Fridge;

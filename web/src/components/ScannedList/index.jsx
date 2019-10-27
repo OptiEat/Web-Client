@@ -22,12 +22,14 @@ function List(props){
     const [selectedDate, setSelectedDate] = useState(
         props.foods && props.foods.Products.map((val) => {
             val = JSON.parse(val); 
-            return new Date((new Date()).getTime() + 1000 * 60 * 60 * 24 * val.expiration);
+            return formatDate(new Date((new Date()).getTime() + 1000 * 60 * 60 * 24 * val.expiration));
         })
     );
+
+    console.log(selectedDate);
+
     const onSubmit = values => {
         console.log(values);
-        console.log(selectedDate);
         values.foodname.map((val, index)=>{
         if(ls[val])
         {
@@ -57,10 +59,6 @@ function List(props){
             {props.foods && props.foods.Products.map((val, index)=>{
               val=JSON.parse(val);
               var quantity = val.quantity;
-              var date = new Date();
-              if(!selectedDate[index]){
-                date = new Date(date.getTime() + 1000 * 60 * 60 * 24 * val.expiration);
-              }
              
              return <li className="listli" key={index}>
                     <input
@@ -89,11 +87,11 @@ function List(props){
                     <input 
                         type = "date"
                         className = "expirationdate"
-                        value={selectedDate[index] ? formatDate(selectedDate[index]) : formatDate(date) }
+                        value={selectedDate[index]}
                         onChange={e => {
-                                var date = e.target.value;
+                                var newDate = e.target.value;
                                 var stateBuf = JSON.parse(JSON.stringify(selectedDate));
-                                stateBuf[index] = new Date(date);
+                                stateBuf[index] = newDate;
                                 setSelectedDate(stateBuf);
                             }}
 
@@ -110,10 +108,11 @@ function List(props){
 }
 function formatDate(date) {
     date = new Date(date);
+    
     var day = date.getDate();
     var month = date.getMonth();
     var year = date.getFullYear();
-  
+    month++;
     return year.toString() + '-' + month.toString().padStart(2, 0) + '-' + day.toString().padStart(2, 0);
   }
 export default ScannedList;
