@@ -1,3 +1,5 @@
+$width: 140px;
+
 .Home {
     background-color: #fefefe;
     color:rgb(51,56,68);
@@ -16,7 +18,7 @@
         top:0px;
       }
       .heroText {
-        padding:150px;
+        padding-top:150px;
         padding-left: 0px;
         padding-right: 0px;
         margin-left: 15px;
@@ -32,6 +34,14 @@
         max-width:800px;
         background-color:rgba(0,0,0,0);
           color:#fefefe;
+      }
+      #StartScannignButton{
+        border-radius: 50%;
+        display: block;
+        margin: 0 auto;
+        width:$width;
+        height:$width;
+        font-size: 25px;
       }
     }
 }
