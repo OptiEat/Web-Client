@@ -19,10 +19,30 @@ function ScannedList(props) {
 
 function List(props){
     const { handleSubmit, register, errors } = useForm();
-    const [selectedDate, setSelectedDate] = useState([]);
+    const [selectedDate, setSelectedDate] = useState(
+        props.foods && props.foods.Products.map((val) => {
+            val = JSON.parse(val); 
+            return new Date((new Date()).getTime() + 1000 * 60 * 60 * 24 * val.expiration);
+        })
+    );
     const onSubmit = values => {
         console.log(values);
         console.log(selectedDate);
+        values.foodname.map((val, index)=>{
+        if(ls[val])
+        {
+            ls[val] = JSON.stringify({ 
+                quantity: (parseInt( (JSON.parse(ls[val]))['quantity'] ) + parseInt(values.foodquantity[index])),
+                expiration: selectedDate[index] 
+                }); 
+        }
+        else
+            ls[val] = JSON.stringify({
+                quantity: parseInt(values.foodquantity[index]),
+                expiration: selectedDate[index]
+                });
+        });
+
     };
     var ls = window.localStorage;
     
@@ -36,14 +56,12 @@ function List(props){
             </li>
             {props.foods && props.foods.Products.map((val, index)=>{
               val=JSON.parse(val);
+              var quantity = val.quantity;
               var date = new Date();
               if(!selectedDate[index]){
                 date = new Date(date.getTime() + 1000 * 60 * 60 * 24 * val.expiration);
               }
-              if(ls.getItem(val.shortName))
-                ls.setItem(val.shortName, parseInt(ls.getItem(val.shortName)) + parseInt(val.quantity)) ;
-              else
-                ls.setItem(val.shortName, parseInt(val.quantity));
+             
              return <li className="listli" key={index}>
                     <input
                         name={`foodname[${index}]`}
@@ -53,7 +71,7 @@ function List(props){
                         })}
                         defaultValue = {val.shortName}
                     />
-                    <div classname = "quantitycontainer">
+                    <div className = "quantitycontainer">
                         <input
                             type="number"
                             name={`foodquantity[${index}]`}
@@ -92,7 +110,6 @@ function List(props){
 }
 function formatDate(date) {
     date = new Date(date);
-    console.log(date);
     var day = date.getDate();
     var month = date.getMonth();
     var year = date.getFullYear();
