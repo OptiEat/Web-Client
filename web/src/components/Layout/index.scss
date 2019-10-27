@@ -1,5 +1,10 @@
 .Layout {
+    position: relative;
     .container {
         padding: 15px;
+    }
+    footer{
+        position: absolute;
+        bottom: 0;
     }
 }
