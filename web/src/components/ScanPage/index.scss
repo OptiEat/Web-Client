@@ -4,6 +4,13 @@ $half:calc(50% - 140px / 2);
   #UploadWrapper {
 
   }
+  #ScannedImageDisplay {
+
+  }
+  #ScannedImage {
+    max-width: 400px;
+    width: calc(100% - 30px);
+  }
     #ScanReceiptButton {
         border-radius: 50%;
         width:$width;
@@ -15,6 +22,7 @@ $half:calc(50% - 140px / 2);
     }
   #UploadDiv {
     position: absolute;
+    height:140px;
     top:$half;
     left:$half;
     width: 150px;

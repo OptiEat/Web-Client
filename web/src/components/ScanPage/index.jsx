@@ -22,7 +22,8 @@ function ScanPage(props) {
   }
   const [loading, setLoading] = useState(false);
   const [scanText, setScanText] = useState('Scan');
-
+  const [imgSrc,  setImgSrc] = useState("");
+  const [styles, setStyles] = useState({opacity:1, top: "auto", bottom:"50%", position: "absolute"});
   const uploadProps = {
     name: 'file',
     customRequest: dummyRequest,
@@ -35,34 +36,40 @@ function ScanPage(props) {
         setScanText("");
       }
       if (info.file.status === 'done') {
+        setStyles({opacity:1, top: "auto", bottom:"40px",  position: "relative"});
         message.success(`${info.file.name} file uploaded successfully`);
         toBase64(info.file.originFileObj).then(base64Data => {
+          setImgSrc(base64Data);
           base64Data = base64Data.substring(22);
           console.log(base64Data);
 
           var options = {
-            uri: "http://localhost:5000/api/query/scan",
+            url: "https://optieat.herokuapp.com/api/query/scan/",
             method: "POST",
             json: {
               "image": base64Data
             }
           };
             request(options, (err, resp, body) => {
-console.log(resp);
-console.log(err);
-            });
+              console.log(resp);
+              if (resp) {
+              message.success(`Successfully scanned`);
+              for (let i  = 0 ; i < resp.body.body.body.Products.length; i++) {
+                let k = JSON.parse(resp.body.body.body.Products[i]);
+              }
+              props.setFoods({Products: resp.body.body.body.Products});
+              setLoading(false);
+              setTimeout(function() {
 
-/*
-          axios.post('http://localhost:5000/api/query/scan', {
-            image: base64Data
-          }).then(function (response) {
-            console.log(response);
-          })
-          .catch(function (error) {
-            console.log(error);
+              })
+              console.log(err);
+            }
+            else {
+              message.error("Scan failed");
+            }
+            });
           });
-          */
-        });
+
       } else if (info.file.status === 'error') {
         message.error(`${info.file.name} file upload failed.`);
       }
@@ -74,9 +81,9 @@ console.log(err);
       <Layout>
         <div className ="ScanPage">
           <section className="ScannedImageDisplay">
-            <img src="" /> 
+            <img id='ScannedImage' src={imgSrc} />
           </section>
-          <div id='UploadDiv'>
+          <div id='UploadDiv' style={styles}>
           <Upload {...uploadProps} id='UploadWrapper'>
             <Button id='ScanReceiptButton' loading={loading}>{scanText}
             </Button>
@@ -107,3 +114,7 @@ toDataURL('https://www.gravatar.com/avatar/d50c83cc0c6523b4d3f6085295c953e0')
     console.log('RESULT:', dataUrl)
   })
 */
+
+
+
+const data ="[\"{\\\"id\\\": \\\"LGM CHILI OIL SAUCE IN JAR\\\", \\\"description\\\": \\\"Chili oil sauce\\\", \\\"quantity\\\": \\\"1\\\", \\\"quantityType\\\": \\\"Jars\\\", \\\"expiration\\\": \\\"365\\\", \\\"shortName\\\": \\\"chili\\\"}\",\"{\\\"id\\\": \\\"KADOYA SESAME OIL\\\", \\\"description\\\": \\\"Kadoya Sesame Oil\\\", \\\"quantity\\\": \\\"15\\\", \\\"quantityType\\\": \\\"Fl Oz\\\", \\\"expiration\\\": \\\"180\\\", \\\"shortName\\\": \\\"oil\\\"}\",\"{\\\"id\\\": \\\"WU-MU CN BEIJING-NOODLE\\\", \\\"description\\\": \\\"Beijing Noodles\\\", \\\"quantity\\\": \\\"1\\\", \\\"quantityType\\\": \\\"Boxes\\\", \\\"expiration\\\": \\\"60\\\", \\\"shortName\\\": \\\"noodle\\\"}\",\"{\\\"id\\\": \\\"ROSEMARY PASTURE RAISED EGGS\\\", \\\"description\\\": \\\"Rosemary Pasture Raised Eggs\\\", \\\"quantity\\\": \\\"6\\\", \\\"quantityType\\\": \\\"Count\\\", \\\"expiration\\\": \\\"20\\\", \\\"shortName\\\": \\\"egg\\\"}\",\"{\\\"id\\\": \\\"HORIZON\\\", \\\"description\\\": \\\"Horizon Milk\\\", \\\"quantity\\\": \\\"1\\\", \\\"quantityType\\\": \\\"Gallons\\\", \\\"expiration\\\": \\\"10\\\", \\\"shortName\\\": \\\"milk\\\"}\",\"{\\\"id\\\": \\\"HORIZON ORGANIC WHOLE MILK\\\", \\\"description\\\": \\\"Horizon Organic Whole Milk\\\", \\\"quantity\\\": \\\"1\\\", \\\"quantityType\\\": \\\"Gallons\\\", \\\"expiration\\\": \\\"10\\\", \\\"shortName\\\": \\\"milk\\\"}\",\"{\\\"id\\\": \\\"GREEN SEEDLESS GRAPE\\\", \\\"description\\\": \\\"Green Seedless Grapes\\\", \\\"quantity\\\": \\\"15\\\", \\\"quantityType\\\": \\\"Ounces\\\", \\\"expiration\\\": \\\"8\\\", \\\"shortName\\\": \\\"grape\\\"}\",\"{\\\"id\\\": \\\"ORGANIC BABY SPRING MIX\\\", \\\"description\\\": \\\"Organic Baby Spring Vegetables Mix\\\", \\\"quantity\\\": \\\"10\\\", \\\"quantityType\\\": \\\"Ounces\\\", \\\"expiration\\\": \\\"6\\\", \\\"shortName\\\": \\\"salad\\\"}\"]"
