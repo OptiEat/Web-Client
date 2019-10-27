@@ -1,0 +1,45 @@
+.listul{
+    list-style: none;
+}
+
+.listli{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.foodname{
+    border: none;
+    border-bottom: 1px solid #70707049;
+    flex-grow: 2;
+}
+
+.foodquantity{
+    width: 25px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    height: 100%;
+    width: 40px;
+    border-radius: 10px;
+    border: 1px solid black;
+    text-align: center;
+    font-size: 20px;
+    font-family: Lato;
+    color: #707070; 
+    flex-grow: 0;
+}
+
+.expirationdate{
+    padding: 10px 15px;
+    margin: 5px 40px;
+    margin-right: 0;
+    background: white;
+    border-radius: 5px;
+    border: 0;
+    border-bottom: 1px solid #70707049;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    flex-grow: 1;
+}

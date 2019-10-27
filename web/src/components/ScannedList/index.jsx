@@ -4,7 +4,7 @@ import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import './index.scss';
 import Layout from '../Layout';
-function Home(props) {
+function ScannedList(props) {
     var foods = [{
         name: "Chicken",
         quantity: 10,
@@ -72,4 +72,4 @@ function List(props){
     
 }
 
-export default Home;
+export default ScannedList;
