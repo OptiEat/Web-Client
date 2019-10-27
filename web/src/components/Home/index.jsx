@@ -11,7 +11,7 @@ function Home() {
             <section className="Hero">
             <div src="/food.jpg" id='heroImage'>
             <div className='heroText'><h1>OptiEat</h1>
-            <p style={{textOverlow: "wrap"}}>Optimizing food use with Machine Learning and Advanced Algorithms</p></div>
+            <p style={{textOverlow: "wrap"}}>Minimizing food waste with Machine Learning and Advanced Algorithms</p></div>
             <Link to="/scan">
             <Button id='StartScannignButton'>
                 Create <br/>Meal Plan

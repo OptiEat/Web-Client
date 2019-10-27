@@ -18,6 +18,7 @@ function Plan(props){
     const [regenMealText, setRegenMealText] = useState("Regenerate Meal Plan");
     //console.log(props.foods.Products);
     const [funText, setFunText] = useState("Cooking the chicken breast");
+    const [recipes, setRecipes] = useState();
     let funnyMessageTimer = "";
     const handleClick = (e) => {
       //use localstorage to handle this click
@@ -34,22 +35,29 @@ function Plan(props){
       for (let key of foodKeys) {
         let foodItemData = JSON.parse(ls[key]);
         foodItemData.shortName = key;
+        const date1 = new Date();
+        const date2 = new Date(foodItemData.expiration);
+        const diffTime = Math.abs(date2 - date1);
+        foodItemData.expiration = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
         productsData.push(foodItemData);
       }
-
+      console.log(productsData);
       var options = {
-        //url: "https://optieat.herokuapp.com/api/query/compute/",
-        url:"http://localhost:5000/api/query/compute",
+        url: "https://optieat.herokuapp.com/api/query/compute/",
+        // url:"http://localhost:5000/api/query/compute",
         method: "POST",
-        json: {
-          "Products": productsData
-        }
+        json: {"Products": productsData}
       };
       request(options, (err, resp, body) => {
+        console.log(body);
         console.log(resp);
         if (resp) {
           message.success(`Successfully Created Meal Plan!`);
           setLoading(false);
+          if(body.body)
+            setRecipes(resp.body.body.Recipes);
+          else
+            setRecipes(JSON.parse(returnjson()));
           console.log(err);
         }
         else {
@@ -58,18 +66,28 @@ function Plan(props){
       });
 
     }
+    
+    var days = [];
+    if(recipes){
+    for(var i = 0; i < recipes.length/3; i++){
+      days.push([]);
+      for(var j = 0; j < 3 && recipes[i*3+j]; j++){
+        days[i].push(recipes[i*3+j]);
+      }
+    }   
+  }
+
     return(
       <Layout>
           <div className="Plan">
             <h1 id='PlanTitle'>Your meal plan </h1><Icon type="smile" theme="twoTone" twoToneColor="#88d657" id='smileIcon'/>
-            <div className='mealBlock'>
-              <h2>Today's suggested meals</h2>
-              <Meals meals={someFood}/>
+            
+            {recipes && days.map((val, index)=>
+              <div className='mealBlock'>
+                <h2>Day {index + 1} suggested meals</h2>
+                <Meals meals={days[index]}/>
             </div>
-            <div className='mealBlock'>
-              <h2>Tomorrow's suggested meals</h2>
-              <Meals meals={someFood}/>
-            </div>
+            )}
             {loading ? <p id='funnyMessage'>{funText}</p> : ""}
             <Button className="regenMeal" loading={loading} onClick={handleClick}>{regenMealText}</Button>
 
@@ -85,11 +103,11 @@ function Meals(props) {
     <Collapse accordion>
       {props.meals.map((val, index) =>
         {
-          return <Panel header={val.name} key={"" + index}>
+          return <Panel header={val.label} key={"" + index}>
               <center>
               <img className='mealImage' src={val.image} />
-              <p className='ingredientsInfo'>Ingredients: {val.ingredients}</p>
-              <a href={val.link}><Button className="tryRecipeButton">Try the recipe!</Button></a></center>
+              <p className='ingredientsInfo'>Ingredients: {val.ingredientLines}</p>
+              <a href={val.uri}><Button className="tryRecipeButton">Try the recipe!</Button></a></center>
             </Panel>
         })
 
