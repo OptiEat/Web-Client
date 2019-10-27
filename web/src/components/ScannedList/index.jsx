@@ -9,14 +9,9 @@ import Layout from '../Layout';
 import $ from 'jquery';
 const dateFormat = 'YYYY/MM/DD';
 function ScannedList(props) {
-    var foods = [{
-        name: "Chicken",
-        quantity: 10,
-        expiration: new Date("10/26/2019")
-    }];
     return (
         <Layout>
-            <List foods={props.foods}/>
+            <List foods={props.foods} setScannedFoods={props.setScannedFoods} setAutoRun={props.setAutoRun}/>
         </Layout>
     )
 }
@@ -58,6 +53,8 @@ function List(props){
                 });
         }
       }
+      props.setAutoRun(true);
+      props.setScannedFoods(props.foods.Products);
     }
       /*
         console.log(values);

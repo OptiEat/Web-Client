@@ -20,7 +20,11 @@ router.post('/compute', (req, res) => {
   request(options, (err, resp, body) => {
     console.log(resp);
     console.log(err);
-    res.send(resp);
+    if (err) {
+      res.send(err);
+    }
+    else {res.send(resp);
+    }
   });
 
   //res.send("Test");
