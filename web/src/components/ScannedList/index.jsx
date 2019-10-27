@@ -26,8 +26,8 @@ function List(props){
   let parsedFoodData = JSON.parse(fdata);
     const { register, handleSubmit, setValue } = useForm();
     const [selectedDate, setSelectedDate] = useState(
-        props && parsedFoodData.map((val) => {
-            val = JSON.parse(val);
+        props.foods && props.foods.Products.map((val) => {
+            //val = JSON.parse(val);
             return formatDate(new Date((new Date()).getTime() + 1000 * 60 * 60 * 24 * val.expiration));
         })
     );
@@ -87,11 +87,10 @@ function List(props){
         <form  onSubmit={handleSubmit(onSubmit)}>
           <Row>
           <Col span={10}>Product Name</Col>
-          <Col span={6}>Quantity</Col>
-          <Col span={8}>Expiration Date</Col>
+          <Col span={4}>Quantity</Col>
+          <Col span={10}>Expiration Date</Col>
           </Row>
-            {props && parsedFoodData.map((val, index)=>{
-              val=JSON.parse(val);
+            {props.foods && props.foods.Products.map((val, index)=>{
               var quantity = val.quantity;
              return <Row className="listli" key={index}>
                     <Col span={10}><Form.Item>
@@ -103,7 +102,7 @@ function List(props){
                         })}
                         defaultValue = {val.shortName} />
                     </Form.Item></Col>
-                    <Col span={6}><Form.Item className = "quantitycontainer">
+                    <Col span={4}><Form.Item className = "quantitycontainer">
                         <InputNumber
                             type="number"
                             name={`foodquantity[${index}]`}
