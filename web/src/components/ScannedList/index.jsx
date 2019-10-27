@@ -77,16 +77,6 @@ function List(props){
         });
 */
 
-    function handleAddFood(){
-      // props.foods.Products.push({
-      //   description: "",
-      //   expiration: "",
-      //   id: "",
-      //   quantity: "",
-      //   quantityType: "",
-      //   shortName: ""
-      // })
-    }
     var ls = window.localStorage;
     if(props.foods)
       console.log(props.foods.Products);
@@ -124,7 +114,19 @@ function List(props){
                             })}
                             defaultValue = {val.quantity}
                         />
-                    </Form.Item></Col>
+                        <label>{
+                          val.quantityType == 'Count' ? 'ct' :
+                          val.quantityType == 'Pounds' ? 'lb' :
+                          val.quantityType == 'Boxes' ? 'bx' :
+                          val.quantityType == 'Gallons' ? 'gl' :
+                          val.quantityType == 'Fl Oz' ? 'oz' :
+                          val.quantityType == 'Ounces' ? 'oz' :
+                          val.quantityType == 'Packs' ? 'pk' :
+                          val.quantityType == 'Jars' ? 'jr' : ""
+                          }</label>
+                    </Form.Item>
+        
+                    </Col>
                     <Col span={8}>
                     <Form.Item><DatePicker defaultValue={moment(selectedDate[index], dateFormat)}
                     onChange={e => {
@@ -138,9 +140,6 @@ function List(props){
             )
             }
 
-                <a href="" className = "addLink" onclick={handleAddFood}>
-                  Add Product 
-                </a>
             
             <Button type="primary" htmlType="submit">
            Submit
