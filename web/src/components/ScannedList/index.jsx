@@ -23,6 +23,7 @@ function List(props){
     const onSubmit = values => {
         console.log(values);
     };
+    var ls = window.localStorage;
 
     console.log(props.foods.Products);
     return(
@@ -30,6 +31,10 @@ function List(props){
             <ul class="listul">
             {props.foods && props.foods.Products.map((val, index)=>{
               val=JSON.parse(val);
+              if(ls.getItem(val.shortName))
+                ls.setItem(val.shortName, ls.getItem(val.shortName) + val.quantity) ;
+              else
+                ls.setItem(val.quantity, val.quantity);
              return <li class="listli" key={index}>
                     <input
                         name={`foodname[${index}]`}
@@ -66,6 +71,7 @@ function List(props){
             }
             )
             }
+            {()=>console.log(ls)}
             </ul>
             <input type="submit" className="submitButton"/>
         </form>
