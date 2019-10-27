@@ -13,19 +13,24 @@ let fridgeContents = [
 ];
 
 function Fridge(props){
+    let ls = window.localStorage;
+    let keys = Object.keys(ls);
 
     return(
       <Layout>
           <div className="Fridge">
             <h1>What's in your fridge?</h1>
             <Row>
+            {
 
-            {fridgeContents.map((val, index) => {
+            }
+            {keys.map((val, index) => {
               return <Col span ={12} className="fridgeItem">
                 <div class='fridgeInnerItem'>
-                <h3>{val.name}</h3>
+                <h3>{val.substring(0,1).toUpperCase() + val.substring(1)}</h3>
                 <span>Expiration:</span>
                 <p>{val.expiration}</p>
+                <p>Amount: {val.quantity}</p>
                 </div>
               </Col>
             })}
