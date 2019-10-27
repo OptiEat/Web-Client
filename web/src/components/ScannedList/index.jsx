@@ -12,7 +12,7 @@ function ScannedList(props) {
     }];
     return (
         <Layout>
-            <List foods={foods}/>
+            <List foods={props.foods}/>
         </Layout>
     )
 }
@@ -36,7 +36,7 @@ function List(props){
                         ref={register({
                         required: 'Required'
                         })}
-                        defaultValue = {val.name}
+                        defaultValue = {val.shortName}
                     />
                     <input
                         type="number"
@@ -53,7 +53,7 @@ function List(props){
                     />
                     <DatePicker
                         className = "expirationdate"
-                        selected={selectedDate[index] ? new Date(selectedDate[index]) : new Date(val.expiration)}
+                        selected={selectedDate[index] ? new Date(selectedDate[index]) : new Date( (new Date()).getDate() + val.expiration)}
                         onChange={date => {
                                 var stateBuf = JSON.parse(JSON.stringify(selectedDate));
                                 stateBuf[index] = new Date(date);
