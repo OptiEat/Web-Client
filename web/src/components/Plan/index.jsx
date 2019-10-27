@@ -130,7 +130,7 @@ function Meals(props) {
               <img className='mealImage' src={val.image} />
               <p className='ingredientsInfo'>Ingredients: {val.ingredientLines}</p>
               <a href={val.shareAs} target="_blank"><Button className="tryRecipeButton">Try the recipe!</Button></a>
-              <Button className="deductButton" onClick={() => {handleDeduct(props.day*3+index)}}>Move to Stomach!</Button>
+              <Button className="deductButton"  type="danger" onClick={() => {handleDeduct(props.day*3+index)}}>Move to Stomach!</Button>
               </center>
             </Panel>
         })
