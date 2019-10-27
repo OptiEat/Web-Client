@@ -6,11 +6,12 @@ router.get('/test', (req, res) => res.send('Hey!'));
 router.post('/compute', (req, res) => {
   console.log(req.body.Products);
   var options = {
-    uri: "http://18.217.33.249:8444",
+    uri: "https://18.217.33.249:8444",
     method: "POST",
     headers: {
       "Content-Type":"application/json"
     },
+    strictSSL: false,
     json: {
     	"Products":req.body.Products
         }
