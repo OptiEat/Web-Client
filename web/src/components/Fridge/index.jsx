@@ -23,13 +23,12 @@ function Fridge(props){
             <Row>
             {keys.map((tval, index) => {
               if(tval != 'mealPlan') {
-              console.log(keys, JSON.parse(ls[tval]));
               let val = JSON.parse(ls[tval]);
               return <Col span ={12} className="fridgeItem" key={index}>
                 <div class='fridgeInnerItem'>
                 <h3>{tval.substring(0,1).toUpperCase() + tval.substring(1)}</h3>
                 <span>Expiration: {val['expiration']}</span>
-                <p>Amount: {val['quantity']}</p>
+                <p>Amount: {val['quantity']} {val['quantityType'] == 'Count' ? tval + "s" : val['quantityType']}</p>
                 </div>
               </Col>
             }})}
@@ -41,7 +40,6 @@ function Fridge(props){
 }
 
 function Meals(props) {
-console.log(props.meals);
   return (
     <Collapse accordion>
       {props.meals.map((val, index) =>

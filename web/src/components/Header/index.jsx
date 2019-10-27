@@ -6,7 +6,7 @@ function Header() {
 
   return (
     <header className="Header">
-    <a href="/"><h1 id='HeaderTitle'>Opti<strong>Eat</strong></h1></a>
+    <a href="/" id='headerTitleWrapper'><img id='logo' src="/optieat.svg"/><h1 id='HeaderTitle'>Opti<strong>Eat</strong></h1></a>
       <Menu mode="horizontal">
         <Menu.Item>
           <a href="fridge">

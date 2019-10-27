@@ -6,15 +6,23 @@
     color:rgb(51,56,68);
     padding-top: 10px;
     transition: color 0.3s;
+    display: inline-block;
+    vertical-align: middle;
   }
-  #HeaderTitle:hover {
+  #headerTitleWrapper:hover #HeaderTitle{
     color:#88d657;
   }
   .ant-menu-item {
     width: 110px;
     font-size: 18px;
-    text-align: center;;
+    text-align: center;
   }
   width:100%;
+  #logo {
+    width:46px;
+    vertical-align: middle;;
+    margin-right: 10px;
+    display: inline-block;;
+  }
 
 }
