@@ -66,7 +66,6 @@ function ScanPage(props) {
               message.error("Scan failed");
             }
             });
-            */
           });
 
       } else if (info.file.status === 'error') {
